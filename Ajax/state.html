@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>molecules.html</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body class="container">
+
+<section class="row">
+	
+	<article class="col-sm-9 col-md-6">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th><button onclick="clickAppend(event)" class="btn btn-default btn-sm">추가</button></th>
+					<th><button onclick="clickList(event)" class="btn btn-info btn-sm">조회</button></th>
+					<th>state</th>
+					<th>maxmp</th>
+					<th>minmp</th>
+					<th>note</th>
+				</tr>
+			</thead>
+			<tbody id="listview">
+				<tr>
+					<td><button onclick="clickModify(event)" class="btn btn-default btn-sm">수정</button></td>
+					<td><button onclick="clickRemove(event)" class="btn btn-info btn-sm">삭제</button></td>
+					<td><a href="#"></a></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</article>
+
+</section>
+
+<!--modal Append-->
+<section id="modalAppend" class="modal fade">
+	<article class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>추가</h3>
+			</header>
+			<form class = "modal-body" onsubmit="return submitAppend(event)">
+				
+				<fieldset class="form-group">
+					<label for="state">state : </label>
+					<input id="state" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="maxmp">maxmp : </label>
+					<input id="maxmp" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="minmp">minmp : </label>
+					<input id="minmp" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="note">note : </label>
+					<input id="note" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<input class="btn btn-primary" type="submit" value="추가">
+			</form>
+			<footer class="modal-footer">
+				<button class="btn" data-dismiss="modal">close</button>
+			</footer>
+		</div>
+	</article>
+</section>
+<!--modal Modify-->
+<section id="modalModify" class="modal fade">
+	<article class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>수정</h3>
+			</header>
+			<form class = "modal-body" onsubmit="return submitModify(event)">
+				
+				<fieldset class="form-group">
+					<label for="state">state : </label>
+					<input id="state" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="maxmp"> maxmp: </label>
+					<input id="maxmp" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="minmp"> minmp: </label>
+					<input id="minmp" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="note"> note: </label>
+					<input id="note" class="form-control" type="text" value="">
+				</fieldset>
+				
+				
+				<input class="btn btn-primary" type="submit" value="수정">
+			</form>
+			<footer class="modal-footer">
+				<button class="btn" data-dismiss="modal">close</button>
+			</footer>
+		</div>
+	</article>
+</section>
+<!--modal Remove-->
+<section id="modalRemove" class="modal fade">
+	<article class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>삭제</h3>
+			</header>
+			<form class = "modal-body" onsubmit="return submitRemove(event)">
+				
+				<fieldset class="form-group">
+					<label for="state">state : </label>
+					<input id="state" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="maxmp">maxmp : </label>
+					<input id="maxmp" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="minmp">minmp : </label>
+					<input id="minmp" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="note">note : </label>
+					<input id="note" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<input class="btn btn-primary" type="submit" value="삭제">
+			</form>
+			<footer class="modal-footer">
+				<button class="btn" data-dismiss="modal">close</button>
+			</footer>
+		</div>
+	</article>
+</section>
+
+<script src="js/state.js"></script>
+<script>
+	/*
+	 * clickAppend(event)
+	 */ 
+	function clickAppend(event) {
+		console.log("clickAppend(event)...");
+		$('#modalAppend').modal();
+	}
+	/*
+	 * submitAppend(event)
+	 */ 
+	function submitAppend(event) {
+		console.log("submitAppend(event)...");
+try{
+		var state = {
+			state : $('#modalAppend #state').val(),
+			maxmp: $('#modalAppend #maxmp').val(),
+			minmp: $('#modalAppend #minmp').val(),
+			note: $('#modalAppend #note').val()
+				}
+        
+		postDept(state,function(item){
+			alert(JSON.stringify(item));
+		$('#modalAppend').modal('hide');
+         clickList();
+ 		},function(errMsg){
+           alert(errMsg);
+		});
+}catch(msg){
+	alert("exception:"+msg);
+}
+		return false;
+	}
+
+	/*
+	 * clickList(event)
+	 */ 
+	function clickList(event) {
+		console.log("clickList(event)...");
+		getDeptList(function(items) {
+			console.log(items);
+			var trs = "";
+			for (var i=0; i<items.length; i++) {
+				trs = trs + "<tr>"
+						  + '<td><button data-deptno="' + items[i].state + '" onclick="clickModify(event)" class="btn btn-default btn-sm">수정</button></td>' 
+						  + '<td><button data-deptno="' + items[i].state + '" onclick="clickRemove(event)" class="btn btn-info btn-sm">삭제</button></td>'
+						  + "<td>" + items[i].state + "</td>"
+						  + "<td>" + items[i].maxmp + "</td>"
+						  + "<td>" + items[i].minmp + "</td>"
+						  + "<td>" + items[i].note + "</td>"
+						  + "</tr>";
+			}
+			var listview = document.querySelector('#listview');
+			listview.innerHTML = trs;
+
+		}, function(errMsg) {
+			console.log(errMsg);
+			alert("에러 : " + errMsg)
+		});
+	}
+	
+	/*
+	 * clickModify(event)
+	 */ 
+	function clickModify(event) {
+		console.log("clickModify(event)... name=" + event.target.dataset.deptno);
+		var state=event.target.dataset.deptno;
+
+		getDept(state,function(item){
+			alert(JSON.stringify(item));
+		 $('#modalModify #state').val(item.state);
+		 $('#modalModify #maxmp').val(item.maxmp);
+		 $('#modalModify #minmp').val(item.minmp);
+		 $('#modalModify #note').val(item.note);
+		
+			$("#modalModify").modal();
+		},function(errMsg){
+		 alert("에러:"+errMsg);
+		});
+	}
+
+	/*
+	 * submitModify(event)
+	 */ 
+	function submitModify(event) {
+		console.log("submitModify(event)...");
+		var state={
+			state : $('#modalModify #state').val(),
+			maxmp: $('#modalModify #maxmp').val(),
+			minmp: $('#modalModify #minmp').val(),
+			note: $('#modalModify #note').val()
+		}
+		putDept(state,function(item){
+			alert(JSON.stringify(item));
+		$("#modalModify").modal('hide');
+		clickList();
+		},function(errMsg){
+			alert("에러:"+errMsg);
+		});
+
+		return false;
+	}
+	/*
+	 * clickRemove(event)
+	 */ 
+	function clickRemove(event) {
+		console.log("clickRemove(event)... name=" + event.target.dataset.deptno);
+		var state=event.target.dataset.deptno;
+		getDept(state,function(item){
+			var state=item.state;
+			var maxmp=item.maxmp;
+			var minmp=item.minmp;
+			var note=item.note;
+			
+	       $('#modalRemove #state').val(state);
+	       $('#modalRemove #maxmp').val(maxmp);
+	       $('#modalRemove #minmp').val(minmp);
+	       $('#modalRemove #note').val(note);
+		$("#modalRemove").modal();
+
+		},function(errMsg){
+          alert("에러:"+errMsg);
+		});
+	}
+	/*
+	 * submitRemove(event)
+	 */ 
+	function submitRemove(event) {
+		console.log("submitRemove(event)...");
+
+		var state=$('#modalRemove #state').val();
+		console.log(state);
+		deleteDept(state,function(result){
+         alert(JSON.stringify(result));
+		$("#modalRemove").modal('hide');
+		clickList();
+		},function(errMsg){
+			alert("에러:"+errMsg);
+		});
+
+		return false;
+	}
+</script>
+</body>
+</html>

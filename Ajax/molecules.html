@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>molecules.html</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body class="container">
+
+	<article class="col-sm-9 col-md-9">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th><button onclick="clickAppend(event)" class="btn btn-default btn-sm">추가</button></th>
+					<th><button onclick="clickList(event)" class="btn btn-info btn-sm">조회</button></th>
+					<th>name</th>
+					<th>chemical formula</th>
+					<th>density(g/cm^3 at 20Cº)</th>
+					<th>average melting point(Cº)</th>
+					<th>solubility in water(g/L at 20Cº)</th>
+					<th>acidity(pKa)</th>
+					<th>hazard statements</th>
+					<th>note</th>
+				</tr>
+			</thead>
+			<tbody id="listview">
+				<tr>
+					<td><button onclick="clickModify(event)" class="btn btn-default btn-sm">수정</button></td>
+					<td><button onclick="clickRemove(event)" class="btn btn-info btn-sm">삭제</button></td>
+					<td><a href="#"></a></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</article>
+
+</section>
+
+<!--modal Append-->
+<section id="modalAppend" class="modal fade">
+	<article class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>추가</h3>
+			</header>
+			<form class = "modal-body" onsubmit="return submitAppend(event)">
+				
+				<fieldset class="form-group">
+					<label for="name">name : </label>
+					<input id="name" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="chemical_formula">chemical formula : </label>
+					<input id="chemical_formula" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="density">density : </label>
+					<input id="density" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="average_melting_point">average melting point : </label>
+					<input id="average_melting_point" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="solubility_in_water">solubility in water : </label>
+					<input id="solubility_in_water" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="acidity">acidity : </label>
+					<input id="acidity" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="hazard_statements">hazard statements : </label>
+					<input id="hazard_statements" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="note">note : </label>
+					<input id="note" class="form-control" type="text" value="">
+				</fieldset>
+				
+				
+				<input class="btn btn-primary" type="submit" value="추가">
+			</form>
+			<footer class="modal-footer">
+				<button class="btn" data-dismiss="modal">close</button>
+			</footer>
+		</div>
+	</article>
+</section>
+<!--modal Modify-->
+<section id="modalModify" class="modal fade">
+	<article class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>수정</h3>
+			</header>
+			<form class = "modal-body" onsubmit="return submitModify(event)">
+				
+				<fieldset class="form-group">
+					<label for="name">name : </label>
+					<input id="name" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="chemical_formula">chemical formula : </label>
+					<input id="chemical_formula" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="density">density : </label>
+					<input id="density" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="average_melting_point">average melting point : </label>
+					<input id="average_melting_point" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="solubility_in_water">solubility in water : </label>
+					<input id="solubility_in_water" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="acidity">acidity : </label>
+					<input id="acidity" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="hazard_statements">hazard statements : </label>
+					<input id="hazard_statements" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="note">note : </label>
+					<input id="note" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<input class="btn btn-primary" type="submit" value="수정">
+			</form>
+			<footer class="modal-footer">
+				<button class="btn" data-dismiss="modal">close</button>
+			</footer>
+		</div>
+	</article>
+</section>
+<!--modal Remove-->
+<section id="modalRemove" class="modal fade">
+	<article class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>삭제</h3>
+			</header>
+			<form class = "modal-body" onsubmit="return submitRemove(event)">
+				
+				<fieldset class="form-group">
+					<label for="name">name : </label>
+					<input id="name" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="chemical_formula">chemical formula : </label>
+					<input id="chemical_formula" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="density">density : </label>
+					<input id="density" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="average_melting_point">average melting point : </label>
+					<input id="average_melting_point" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="solubility_in_water">solubility in water : </label>
+					<input id="solubility_in_water" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="acidity">acidity : </label>
+					<input id="acidity" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="hazard_statements">hazard statements : </label>
+					<input id="hazard_statements" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="note">note : </label>
+					<input id="note" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<input class="btn btn-primary" type="submit" value="삭제">
+			</form>
+			<footer class="modal-footer">
+				<button class="btn" data-dismiss="modal">close</button>
+			</footer>
+		</div>
+	</article>
+</section>
+
+<script src="js/molecules.js"></script>
+<script>
+	/*
+	 * clickAppend(event)
+	 */ 
+	function clickAppend(event) {
+		console.log("clickApend(event)...");
+		$('#modalAppend').modal();
+	}
+	/*
+	 * submitAppend(event)
+	 */ 
+	function submitAppend(event) {
+		console.log("submitApend(event)...");
+try{
+		var molecules = {
+			name : $('#modalAppend #name').val(),
+			chemical_formula : $('#modalAppend #chemical_formula').val(),
+			density : $('#modalAppend #density').val(),
+			average_melting_point : $('#modalAppend #average_melting_point').val(),
+			solubility_in_water : $('#modalAppend #solubility_in_water').val(),
+			acidity : $('#modalAppend #acidity').val(),
+			hazard_statements : $('#modalAppend #hazard_statements').val(),
+			note : $('#modalAppend #note').val()
+		}
+        
+		postDept(molecules,function(item){
+			alert(JSON.stringify(item));
+		$('#modalAppend').modal('hide');
+         clickList();
+ 		},function(errMsg){
+           alert(errMsg);
+		});
+}catch(msg){
+	alert("exception:"+msg);
+}
+		return false;
+	}
+
+	/*
+	 * clickList(event)
+	 */ 
+	function clickList(event) {
+		console.log("clickList(event)...");
+		getDeptList(function(items) {
+			console.log(items);
+			var trs = "";
+			for (var i=0; i<items.length; i++) {
+				trs = trs + "<tr>"
+						  + '<td><button data-deptno="' + items[i].name + '" onclick="clickModify(event)" class="btn btn-default btn-sm">수정</button></td>' 
+						  + '<td><button data-deptno="' + items[i].name + '" onclick="clickRemove(event)" class="btn btn-info btn-sm">삭제</button></td>'
+						  + "<td>" + items[i].name + "</td>"
+						  + "<td>" + items[i].chemical_formula + "</td>"
+						  + "<td>" + items[i].density + "</td>"
+						  + "<td>" + items[i].average_melting_point + "</td>"
+						  + "<td>" + items[i].solubility_in_water + "</td>"
+						  + "<td>" + items[i].acidity + "</td>"
+						  + "<td>" + items[i].hazard_statements + "</td>"
+						  + "<td>" + items[i].note + "</td>"
+						  + "</tr>";
+			}
+			var listview = document.querySelector('#listview');
+			listview.innerHTML = trs;
+
+		}, function(errMsg) {
+			console.log(errMsg);
+			alert("에러 : " + errMsg)
+		});
+	}
+	
+	/*
+	 * clickModify(event)
+	 */ 
+	function clickModify(event) {
+		console.log("clickModify(event)... name=" + event.target.dataset.deptno);
+		var name=event.target.dataset.deptno;
+
+		getDept(name,function(item){
+			alert(JSON.stringify(item));
+		 $('#modalModify #name').val(item.name);
+		 $('#modalModify #chemical_formula').val(item.chemical_formula);
+		 $('#modalModify #density').val(item.density),
+		 $('#modalModify #average_melting_point').val(item.average_melting_point),
+	     $('#modalModify #solubility_in_water').val(item.solubility_in_water),
+		 $('#modalModify #acidity').val(item.acidity),
+		 $('#modalModify #hazard_statements').val(item.hazard_statements),
+		 $('#modalModify #note').val(item.note)
+
+			$("#modalModify").modal();
+		},function(errMsg){
+		 alert("에러:"+errMsg);
+		});
+	}
+
+	/*
+	 * submitModify(event)
+	 */ 
+	function submitModify(event) {
+		console.log("submitModify(event)...");
+		var molecules={
+			name : $('#modalModify #name').val(),
+			chemical_formula : $('#modalModify #chemical_formula').val(),
+			density : $('#modalModify #density').val(),
+			average_melting_point : $('#modalModify #average_melting_point').val(),
+			solubility_in_water : $('#modalModify #solubility_in_water').val(),
+			acidity : $('#modalModify #acidity').val(),
+			hazard_statements : $('#modalModify #hazard_statements').val(),
+			note : $('#modalModify #note').val()
+		}
+		putDept(molecules,function(item){
+			alert(JSON.stringify(item));
+		$("#modalModify").modal('hide');
+		clickList();
+		},function(errMsg){
+			alert("에러:"+errMsg);
+		});
+
+		return false;
+	}
+	/*
+	 * clickRemove(event)
+	 */ 
+	function clickRemove(event) {
+		console.log("clickRemove(event)... name=" + event.target.dataset.deptno);
+		var name=event.target.dataset.deptno;
+		getDept(name,function(item){
+			var name=item.name;
+			var chemical_formula=item.chemical_formula;
+			var density=item.density;
+			var average_melting_point=item.average_melting_point;
+			var solubility_in_water=item.solubility_in_water;
+			var acidity=item.acidity;
+			var hazard_statements=item.hazard_statements;
+			var note=item.note;
+			
+    
+	       $('#modalRemove #name').val(name);
+	       $('#modalRemove #chemical_formula').val(chemical_formula);
+	       $('#modalRemove #density').val(density);
+	       $('#modalRemove #average_melting_point').val(average_melting_point);
+	       $('#modalRemove #solubility_in_water').val(solubility_in_water);
+	       $('#modalRemove #acidity').val(acidity);
+	       $('#modalRemove #hazard_statements').val(hazard_statements);
+	       $('#modalRemove #note').val(note);
+		   
+		$("#modalRemove").modal();
+
+		},function(errMsg){
+          alert("에러:"+errMsg);
+		});
+	}
+	/*
+	 * submitRemove(event)
+	 */ 
+	function submitRemove(event) {
+		console.log("submitRemove(event)...");
+
+		var name=$('#modalRemove #name').val();
+		console.log(name);
+		deleteDept(name,function(result){
+         alert(JSON.stringify(result));
+		$("#modalRemove").modal('hide');
+		clickList();
+		},function(errMsg){
+			alert("에러:"+errMsg);
+		});
+
+		return false;
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+footer{
+    position:fixed;
+    bottom:200px;
+}
+
+h4{
+    text-align:center;
+    width:170%;
+}
+
+div{
+    float:left;
+    padding:0px 20px 0px 3px; 
+}

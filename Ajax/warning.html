@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>molecules.html</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body class="container">
+
+<section class="row">
+	
+	<article class="col-sm-9 col-md-6">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th><button onclick="clickAppend(event)" class="btn btn-default btn-sm">추가</button></th>
+					<th><button onclick="clickList(event)" class="btn btn-info btn-sm">조회</button></th>
+					<th>hazard statements</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody id="listview">
+				<tr>
+					<td><button onclick="clickModify(event)" class="btn btn-default btn-sm">수정</button></td>
+					<td><button onclick="clickRemove(event)" class="btn btn-info btn-sm">삭제</button></td>
+					<td><a href="#"></a></td>
+					<td></td>
+					
+				</tr>
+			</tbody>
+		</table>
+	</article>
+</section>
+
+<!--modal Append-->
+<section id="modalAppend" class="modal fade">
+	<article class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>추가</h3>
+			</header>
+			<form class = "modal-body" onsubmit="return submitAppend(event)">
+				
+				<fieldset class="form-group">
+					<label for="hazard_statements">hazard statements : </label>
+					<input id="hazard_statements" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="description">description : </label>
+					<input id="description" class="form-control" type="text" value="">
+				</fieldset>
+				
+				<input class="btn btn-primary" type="submit" value="추가">
+			</form>
+			<footer class="modal-footer">
+				<button class="btn" data-dismiss="modal">close</button>
+			</footer>
+		</div>
+	</article>
+</section>
+<!--modal Modify-->
+<section id="modalModify" class="modal fade">
+	<article class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>수정</h3>
+			</header>
+			<form class = "modal-body" onsubmit="return submitModify(event)">
+				
+				<fieldset class="form-group">
+					<label for="hazard_statements">hazard statements : </label>
+					<input id="hazard_statements" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="description"> description: </label>
+					<input id="description" class="form-control" type="text" value="">
+				</fieldset>
+				
+				
+				<input class="btn btn-primary" type="submit" value="수정">
+			</form>
+			<footer class="modal-footer">
+				<button class="btn" data-dismiss="modal">close</button>
+			</footer>
+		</div>
+	</article>
+</section>
+<!--modal Remove-->
+<section id="modalRemove" class="modal fade">
+	<article class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>삭제</h3>
+			</header>
+			<form class = "modal-body" onsubmit="return submitRemove(event)">
+				
+				<fieldset class="form-group">
+					<label for="hazard_statements">hazard statements : </label>
+					<input id="hazard_statements" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<fieldset class="form-group">
+					<label for="description">description : </label>
+					<input id="description" class="form-control" type="text" value="" readonly>
+				</fieldset>
+				
+				<input class="btn btn-primary" type="submit" value="삭제">
+			</form>
+			<footer class="modal-footer">
+				<button class="btn" data-dismiss="modal">close</button>
+			</footer>
+		</div>
+	</article>
+</section>
+
+<script src="js/warning.js"></script>
+<script>
+	/*
+	 * clickAppend(event)
+	 */ 
+	function clickAppend(event) {
+		console.log("clickAppend(event)...");
+		$('#modalAppend').modal();
+	}
+	/*
+	 * submitAppend(event)
+	 */ 
+	function submitAppend(event) {
+		console.log("submitAppend(event)...");
+try{
+		var warning = {
+			hazard_statements : $('#modalAppend #hazard_statements').val(),
+			description : $('#modalAppend #description').val()
+				}
+        
+		postDept(warning,function(item){
+			alert(JSON.stringify(item));
+		$('#modalAppend').modal('hide');
+         clickList();
+ 		},function(errMsg){
+           alert(errMsg);
+		});
+}catch(msg){
+	alert("exception:"+msg);
+}
+		return false;
+	}
+
+	/*
+	 * clickList(event)
+	 */ 
+	function clickList(event) {
+		console.log("clickList(event)...");
+		getDeptList(function(items) {
+			console.log(items);
+			var trs = "";
+			for (var i=0; i<items.length; i++) {
+				trs = trs + "<tr>"
+						  + '<td><button data-deptno="' + items[i].hazard_statements + '" onclick="clickModify(event)" class="btn btn-default btn-sm">수정</button></td>' 
+						  + '<td><button data-deptno="' + items[i].hazard_statements + '" onclick="clickRemove(event)" class="btn btn-info btn-sm">삭제</button></td>'
+						  + "<td>" + items[i].hazard_statements + "</td>"
+						  + "<td>" + items[i].description+ "</td>"
+						  + "</tr>";
+			}
+			var listview = document.querySelector('#listview');
+			listview.innerHTML = trs;
+
+		}, function(errMsg) {
+			console.log(errMsg);
+			alert("에러 : " + errMsg)
+		});
+	}
+	
+	/*
+	 * clickModify(event)
+	 */ 
+	function clickModify(event) {
+		console.log("clickModify(event)... name=" + event.target.dataset.deptno);
+		var hazard_statements=event.target.dataset.deptno;
+
+		getDept(hazard_statements,function(item){
+			alert(JSON.stringify(item));
+		 $('#modalModify #hazard_statements').val(item.hazard_statements);
+		 $('#modalModify #description').val(item.description);
+		
+			$("#modalModify").modal();
+		},function(errMsg){
+		 alert("에러:"+errMsg);
+		});
+	}
+
+	/*
+	 * submitModify(event)
+	 */ 
+	function submitModify(event) {
+		console.log("submitModify(event)...");
+		var warning={
+			hazard_statements : $('#modalModify #hazard_statements').val(),
+			description : $('#modalModify #description').val(),
+		}
+		putDept(warning,function(item){
+			alert(JSON.stringify(item));
+		$("#modalModify").modal('hide');
+		clickList();
+		},function(errMsg){
+			alert("에러:"+errMsg);
+		});
+
+		return false;
+	}
+	/*
+	 * clickRemove(event)
+	 */ 
+	function clickRemove(event) {
+		console.log("clickRemove(event)... name=" + event.target.dataset.deptno);
+		var hazard_statements=event.target.dataset.deptno;
+		getDept(hazard_statements,function(item){
+			var hazard_statements=item.hazard_statements;
+			var description=item.description;
+			
+    
+	       $('#modalRemove #hazard_statements').val(hazard_statements);
+	       $('#modalRemove #description').val(description);
+		$("#modalRemove").modal();
+
+		},function(errMsg){
+          alert("에러:"+errMsg);
+		});
+	}
+	/*
+	 * submitRemove(event)
+	 */ 
+	function submitRemove(event) {
+		console.log("submitRemove(event)...");
+
+		var hazard_statements=$('#modalRemove #hazard_statements').val();
+		console.log(hazard_statements);
+		deleteDept(hazard_statements,function(result){
+         alert(JSON.stringify(result));
+		$("#modalRemove").modal('hide');
+		clickList();
+		},function(errMsg){
+			alert("에러:"+errMsg);
+		});
+
+		return false;
+	}
+</script>
+</body>
+</html>
